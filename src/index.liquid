@@ -1,0 +1,12 @@
+---
+title: Pages
+---
+
+<h1>{{ title }}</h1>
+
+{% for page in collections.pages %}
+<article>
+  <a href="{{ page.url | url }}">{{ page.data.title }}</a>
+  <p>{{ page.data.description | truncatewords: 4 }}</p>
+</article>
+{% endfor %}
