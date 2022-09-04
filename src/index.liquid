@@ -4,9 +4,16 @@ title: Pages
 
 <h1>{{ title }}</h1>
 
-{% for page in collections.pages %}
-<article>
-  <a href="{{ page.url | url }}">{{ page.data.title }}</a>
-  <p>{{ page.data.description | truncatewords: 4 }}</p>
-</article>
+{% for post in collections.pages %}
+  {%- assign frontMatterExcerpt = post.data.excerpt | default: post.template.frontMatter.excerpt | strip_html -%}
+  {%- assign templateContentExcerpt = post.templateContent | strip_html | truncatewords: 20 -%}
+  {%- assign excerpt = frontMatterExcerpt | default: templateContentExcerpt | strip -%}
+  <section>
+    <article>
+      <h1><a href="{{ post.url | url }}">{{ post.data.title }}</a></h1>
+      <p data-description="4">{{ post.data.description | truncatewords: 4 }}</p>
+      <p data-excerpt>{{ excerpt }}</p>
+    </article>
+    <hr/>
+  </section>
 {% endfor %}
